@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إذن استيراد حيوانات شرسة (كلاب)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --header-bg: #1e2832;
+      --accent-green: #7cb88a;
+      --accent-green-soft: #a8d9b1;
+      --page-bg: #f0f2f5;
+      --text-dark: #2c3338;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Tajawal", "Segoe UI", sans-serif;
+      background: var(--page-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ——— Header ——— */
+    .site-header {
+      background: var(--header-bg);
+      color: var(--white);
+      padding: 1rem 1.5rem 0;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-green-soft);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo svg {
+      width: 28px;
+      height: 28px;
+      fill: #2d5a3d;
+    }
+
+    .header-center {
+      flex: 1;
+      text-align: center;
+      min-width: 200px;
+    }
+
+    .breadcrumbs {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-title {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+    }
+
+    .tag-row span {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-service-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--white);
+      color: var(--header-bg);
+      border: none;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-service-card svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--white);
+      padding: 0.4rem;
+      cursor: pointer;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    /* ——— Stepper ——— */
+    .stepper-wrap {
+      background: var(--header-bg);
+      padding: 1.25rem 1rem 2rem;
+      overflow-x: auto;
+    }
+
+    .stepper {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      min-width: min(900px, 100%);
+      margin: 0 auto;
+      position: relative;
+      padding: 0 0.5rem;
+    }
+
+    .stepper-line {
+      position: absolute;
+      top: 18px;
+      right: 8%;
+      left: 8%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.35);
+      z-index: 0;
+    }
+
+    .step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      max-width: 140px;
+    }
+
+    .step-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: transparent;
+      border: 2px solid var(--white);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .step.active .step-circle {
+      background: var(--accent-green);
+      border-color: var(--accent-green);
+      color: var(--header-bg);
+    }
+
+    .step-pointer {
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 10px solid var(--white);
+      margin-top: 4px;
+      opacity: 0;
+    }
+
+    .step.active .step-pointer {
+      opacity: 1;
+    }
+
+    .step-label {
+      margin-top: 0.5rem;
+      font-size: 0.72rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.35;
+    }
+
+    /* ——— Main ——— */
+    .main-area {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 2.5rem;
+      display: grid;
+      grid-template-columns: minmax(200px, 280px) 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .main-area {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sidebar-intro h2 {
+      color: #4a9d5f;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .sidebar-intro p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e8eaed;
+      overflow: hidden;
+    }
+
+    .terms-scroll {
+      max-height: 420px;
+      overflow-y: auto;
+      padding: 1.25rem 1.25rem 1rem;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      border-bottom: 1px solid #eee;
+    }
+
+    .terms-scroll ul {
+      list-style: disc;
+      padding-right: 1.25rem;
+      margin: 0.5rem 0 0;
+    }
+
+    .terms-scroll li {
+      margin-bottom: 0.35rem;
+    }
+
+    .terms-scroll strong {
+      color: #333;
+    }
+
+    .agree-bar {
+      background: #e8f5eb;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .custom-check {
+      position: relative;
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .custom-check input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .custom-check .box {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      background: var(--accent-green);
+      border: 2px solid var(--accent-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .custom-check input:not(:checked) + .box {
+      background: var(--white);
+    }
+
+    .custom-check input:not(:checked) + .box svg {
+      opacity: 0;
+    }
+
+    .custom-check .box svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--white);
+      fill: none;
+      stroke-width: 3;
+    }
+
+    .agree-bar label {
+      font-size: 0.9rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .agree-bar .req {
+      color: #c0392b;
+    }
+
+    .card-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-next {
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.55rem 1.75rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: var(--accent-green);
+      color: var(--header-bg);
+      transition: background 0.15s, opacity 0.15s;
+    }
+
+    .btn-next:hover:not(:disabled) {
+      background: #6daa7c;
+    }
+
+    .btn-next:disabled {
+      background: #c5cdd4;
+      color: #7a8794;
+      cursor: not-allowed;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-top">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M12 3C10 7 6 9 6 14c0 3 2 5 6 7 4-2 6-4 6-7 0-5-4-7-6-11z"/><path d="M12 14v7"/></svg>
+      </div>
+      <div class="header-center">
+        <p class="breadcrumbs">الرئيسية &gt; دليل الخدمات الإلكترونية &gt; إذن استيراد حيوانات شرسة (كلاب)</p>
+        <h1 class="page-title">إذن استيراد حيوانات شرسة (كلاب)</h1>
+        <div class="tag-row">
+          <span>خدمات الاستيراد والتصدير والفسح</span>
+          <span>خدمات الاستيراد</span>
+          <span>إذن استيراد حيوانات شرسة (كلاب)</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="btn-service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h4M7 12h10"/></svg>
+          عرض بطاقة الخدمة
+        </button>
+        <button type="button" class="icon-btn" aria-label="طباعة" title="طباعة">
+          <svg viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+        </button>
+        <button type="button" class="icon-btn" aria-label="معلومات" title="معلومات">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        </button>
+        <button type="button" class="icon-btn" aria-label="إشارة مرجعية" title="إشارة مرجعية">
+          <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="stepper-wrap">
+    <div class="stepper-line" aria-hidden="true"></div>
+    <nav class="stepper" aria-label="خطوات الطلب">
+      <div class="step active">
+        <div class="step-circle">1</div>
+        <div class="step-pointer" aria-hidden="true"></div>
+        <span class="step-label">اتفاقية الاستخدام</span>
+      </div>
+      <div class="step">
+        <div class="step-circle">2</div>
+        <div class="step-pointer" aria-hidden="true"></div>
+        <span class="step-label">البيانات المسترجعة</span>
+      </div>
+      <div class="step">
+        <div class="step-circle">3</div>
+        <div class="step-pointer" aria-hidden="true"></div>
+        <span class="step-label">بيانات الطلب</span>
+      </div>
+      <div class="step">
+        <div class="step-circle">4</div>
+        <div class="step-pointer" aria-hidden="true"></div>
+        <span class="step-label">تفاصيل المنتجات</span>
+      </div>
+      <div class="step">
+        <div class="step-circle">5</div>
+        <div class="step-pointer" aria-hidden="true"></div>
+        <span class="step-label">مرفقات الطلب</span>
+      </div>
+      <div class="step">
+        <div class="step-circle">6</div>
+        <div class="step-pointer" aria-hidden="true"></div>
+        <span class="step-label">مراجعة الطلب</span>
+      </div>
+    </nav>
+  </div>
+
+  <main class="main-area">
+    <aside class="sidebar-intro">
+      <h2>اتفاقية الاستخدام</h2>
+      <p>
+        يرجى الاطلاع على الشروط والأحكام الواردة أدناه بعناية. الموافقة على هذه الشروط شرط أساسي لإتمام طلبكم للحصول على خدمة إذن استيراد حيوانات شرسة (كلاب)، وذلك ضمن الأنظمة واللوائح المعمول بها.
+      </p>
+    </aside>
+
+    <div class="card-column">
+      <div class="card">
+        <div class="terms-scroll" tabindex="0">
+          <p><strong>3- أنواع الكلاب المحظورة:-</strong></p>
+          <ul>
+            <li><strong>1- Pit Bulls:</strong> بما في ذلك American Pit Bull Terrier، وAmerican Staffordshire Terrier، وStaffordshire Bull Terrier، وAmerican Bully، وأي هجين منها.</li>
+            <li><strong>2- Rottweilers:</strong> الكلاب الروت وايلر النقية أو المهجنة.</li>
+            <li><strong>3- Boxer:</strong> سلالة البوكسر.</li>
+            <li><strong>4- Mastiff types:</strong> بما في ذلك البرازيلية (Fila Brasileiro) والأرجنتينية (Dogo Argentino) وأي أنواع أخرى من الماستيف أو هجائنها.</li>
+            <li><strong>5- Japanese Tosa:</strong> توزا اليابانية.</li>
+            <li><strong>6- Bull Dog:</strong> أنواع البل دوغ بما في ذلك الإنجليزية والفرنسية.</li>
+            <li><strong>7- Perro de Presa Canario:</strong> كلب الراعي الكناري.</li>
+          </ul>
+          <p style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
+            تخضع القائمة للتحديث وفق القرارات الرسمية. يتحمل مقدم الطلب مسؤولية التأكد من مطابقة نوع الكلب للأنظمة قبل التقديم.
+          </p>
+        </div>
+        <div class="agree-bar">
+          <div class="custom-check">
+            <input type="checkbox" id="agree" />
+            <span class="box" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+          </div>
+          <label for="agree"><span class="req">*</span> يرجى الموافقة على الشروط المذكورة أعلاه</label>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button type="button" class="btn-next" id="btn-next" disabled aria-disabled="true">التالي</button>
+      </div>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var agree = document.getElementById("agree");
+      var nextBtn = document.getElementById("btn-next");
+      function syncNextState() {
+        var on = agree.checked;
+        nextBtn.disabled = !on;
+        nextBtn.setAttribute("aria-disabled", on ? "false" : "true");
+      }
+      agree.addEventListener("change", syncNextState);
+      syncNextState();
+
+      nextBtn.addEventListener("click", function () {
+        if (!nextBtn.disabled) {
+          window.location.href = "retrive.html";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
